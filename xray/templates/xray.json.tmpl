@@ -127,6 +127,16 @@
       "method": "{{.Method}}",
       "password": "{{.Password}}"
     }]
+    {{- else if eq .Protocol "xhttp" }}
+    "vnext": [{
+      "address": "{{.Server}}",
+      "port": {{.Port}},
+      "users": [{
+        "id": "{{.UUID}}",
+        "encryption": "none",
+        "level": {{.GetUserLevel}}
+      }]
+    }]
     {{- end }}
   },
   "streamSettings": {
@@ -170,7 +180,7 @@
     }
     {{- end }}
 
-    {{- if .HasGRPCSettings }},
+    {{- if and .Type (eq .Type "grpc") }},
     "grpcSettings": {
       "serviceName": "{{.GetServiceName}}",
       "multiMode": {{.MultiMode}}
@@ -180,6 +190,13 @@
       {{- if gt .WindowsSize 0 }},
       "initial_windows_size": {{.WindowsSize}}
       {{- end }}
+    }
+    {{- end }}
+
+    {{- if and .Type (eq .Type "xhttp") }},
+    "xhttpSettings": {
+      "path": "{{.Path}}",
+      "mode": "{{.XHTTPMode | default "packet-up"}}"
     }
     {{- end }},
     
