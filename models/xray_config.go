@@ -3,64 +3,70 @@ package models
 import "encoding/json"
 
 type XrayConfig struct {
-	Log struct {
-		LogLevel string `json:"loglevel"`
-	} `json:"log"`
-	Inbounds  []XrayInbound  `json:"inbounds"`
-	Outbounds []XrayOutbound `json:"outbounds"`
-	Routing   XrayRouting    `json:"routing"`
+    Log struct {
+        LogLevel string `json:"loglevel"`
+    } `json:"log"`
+    Inbounds  []XrayInbound  `json:"inbounds"`
+    Outbounds []XrayOutbound `json:"outbounds"`
+    Routing   XrayRouting    `json:"routing"`
 }
 
 type XrayInbound struct {
-	Listen   string `json:"listen"`
-	Port     int    `json:"port"`
-	Protocol string `json:"protocol"`
-	Tag      string `json:"tag"`
-	Sniffing struct {
-		Enabled      bool     `json:"enabled"`
-		DestOverride []string `json:"destOverride"`
-		RouteOnly    bool     `json:"routeOnly"`
-	} `json:"sniffing"`
+    Listen   string `json:"listen"`
+    Port     int    `json:"port"`
+    Protocol string `json:"protocol"`
+    Tag      string `json:"tag"`
+    Sniffing struct {
+        Enabled      bool     `json:"enabled"`
+        DestOverride []string `json:"destOverride"`
+        RouteOnly    bool     `json:"routeOnly"`
+    } `json:"sniffing"`
 }
 
 type XrayOutbound struct {
-	Tag            string          `json:"tag"`
-	Protocol       string          `json:"protocol"`
-	Settings       json.RawMessage `json:"settings"`
-	StreamSettings *StreamSettings `json:"streamSettings,omitempty"`
+    Tag            string          `json:"tag"`
+    Protocol       string          `json:"protocol"`
+    Settings       json.RawMessage `json:"settings"`
+    StreamSettings *StreamSettings `json:"streamSettings,omitempty"`
 }
 
 type StreamSettings struct {
-	Network         string             `json:"network,omitempty"`
-	Security        string             `json:"security,omitempty"`
-	TLSSettings     *TLSSettings       `json:"tlsSettings,omitempty"`
-	RealitySettings *RealitySettings   `json:"realitySettings,omitempty"`
-	WSSettings      *WebSocketSettings `json:"wsSettings,omitempty"`
-	SockOpt         json.RawMessage    `json:"sockopt"`
+    Network         string             `json:"network,omitempty"`
+    Security        string             `json:"security,omitempty"`
+    TLSSettings     *TLSSettings       `json:"tlsSettings,omitempty"`
+    RealitySettings *RealitySettings   `json:"realitySettings,omitempty"`
+    WSSettings      *WebSocketSettings `json:"wsSettings,omitempty"`
+    XHTTPSettings   *XHTTPSettings     `json:"xhttpSettings,omitempty"` // اضافه شده برای XHTTP
+    SockOpt         json.RawMessage    `json:"sockopt"`
 }
 
 type TLSSettings struct {
-	AllowInsecure bool `json:"allowInsecure"`
+    AllowInsecure bool `json:"allowInsecure"`
 }
 
 type RealitySettings struct {
-	ServerName  string `json:"serverName"`
-	Fingerprint string `json:"fingerprint"`
-	PublicKey   string `json:"publicKey"`
-	ShortID     string `json:"shortId"`
+    ServerName  string `json:"serverName"`
+    Fingerprint string `json:"fingerprint"`
+    PublicKey   string `json:"publicKey"`
+    ShortID     string `json:"shortId"`
 }
 
 type WebSocketSettings struct {
-	Path    string            `json:"path"`
-	Headers map[string]string `json:"headers"`
+    Path    string            `json:"path"`
+    Headers map[string]string `json:"headers"`
+}
+
+type XHTTPSettings struct {
+    Path string `json:"path"`
+    Mode string `json:"mode"`
 }
 
 type XrayRouting struct {
-	Rules []XrayRoutingRule `json:"rules"`
+    Rules []XrayRoutingRule `json:"rules"`
 }
 
 type XrayRoutingRule struct {
-	Type        string   `json:"type"`
-	InboundTag  []string `json:"inboundTag"`
-	OutboundTag string   `json:"outboundTag"`
+    Type        string   `json:"type"`
+    InboundTag  []string `json:"inboundTag"`
+    OutboundTag string   `json:"outboundTag"`
 }
