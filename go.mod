@@ -7,7 +7,7 @@ require (
 	github.com/go-co-op/gocron v1.37.0
 	github.com/prometheus/client_golang v1.20.5
 	github.com/prometheus/common v0.62.0
-	github.com/xtls/xray-core v1.8.24
+	github.com/xtls/xray-core v23.3.6
 )
 
 require (
